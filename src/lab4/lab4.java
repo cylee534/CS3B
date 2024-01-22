@@ -25,10 +25,10 @@ public class lab4 {
     System.out.println("The cost of tuition in 10 years for 4 years is " + fourYearCost_inTenYears);
   }
 
-  //Pre : base is between 2 and 16, numberA and numberB are valid numbers in the given base
-  //Post: print the sum of two numbers in the given base
-  //      return 0 if the base and number are valid
-  //      return -1 if the base or number is not valid
+
+  //A wrapper function for the actual algorithm
+  //base is between 2 and 16, numberA and numberB are valid numbers in the given base
+  //print the sum of two numbers in the given base and in base 10
   public static int additionalAlgorithm(int base, int numberOfDigit, String numberA, String numberB)
   {
     //Check if base is valid, and the number is valid
@@ -37,6 +37,7 @@ public class lab4 {
     
     if(baseIsValid && stringIsValid)
     {
+      //The actual algorithm
       String result = theAlgorithm(base, numberOfDigit, numberA, numberB);
 
       //Print the result
@@ -55,8 +56,7 @@ public class lab4 {
     }
   }
 
-  //****The additional algorithm*****//
-  //Post: return the sum of two numbers in the given base
+  //return the sum of two numbers in the given base
   private static String theAlgorithm(int base, int numberOfDigit, String numberA, String numberB) {
     char intToDigit[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
     String result = "";
@@ -95,7 +95,7 @@ public class lab4 {
     return result;
   }
 
-  //Post: parse the char to int, base upto 16
+  //parse the char to int, base upto 16
   private static int parseInt(char c) {
     int  digitToInt[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
     if(Character.isLetter(c))
