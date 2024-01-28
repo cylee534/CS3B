@@ -1,63 +1,120 @@
 package lab4;
 
-public class lab4 {
- 
+import java.util.Scanner;
+
+public class Lab4 {
+  private static String ERROR_MESSAGE = "Base or Number is not valid";
   public static void main(String[] args) {
     calculateTuitionCost(10_000f, 0.05f);
-    additionalAlgorithm(16, 5, "F23B5", "6789A");
+    calculateTuitionCost(20_000f, .1f);
+    calculateTuitionCost(99_999f, .2f);
+
+    additionalAlgorithm(5, "0XF23B5", "0X6789A"); //base 16
+    additionalAlgorithm(3, "0345", "0723"); //base 8
+    additionalAlgorithm(13, "0b0000110100100", "0b1101100111001"); //base 2
+    additionalAlgorithm(13, "0b0000110100100", "011101100111001"); //base 2
   }
 
-  public static void calculateTuitionCost(float annualTuitionCost, float interestRate)
+//print the tuition cost
+  public static void calculateTuitionCost(double annualTuitionCost, double interestRate)
   {
-    float oneYearCost_inTenYears = annualTuitionCost;
-    float fourYearCost_inTenYears = annualTuitionCost;
-    for(int i = 0; i < 10; ++i)
+    double[] result = getTuitionCost(annualTuitionCost, interestRate);
+    System.out.println("The cost of tuition in 10 years is " + result[0]);
+    System.out.println("The cost of tuition in 10 years for 4 years is " + result[1]);
+  }
+
+//Get the tuition cost
+  public static double[] getTuitionCost(double annualTuitionCost, double interestRate)
+  {
+    //Using double to increase the accuracy
+    double oneYearCost_inTenYears = annualTuitionCost;
+    double fourYearCost_inTenYears = annualTuitionCost;
+    //Calculate the cost of tuition in 10 years
+    for(int i = 0; i < 13; ++i)
     { 
       if(i < 4 && i > 0)
       {
+        //It would add the cost at the begining of the first four year
         fourYearCost_inTenYears += annualTuitionCost;
       }
-      oneYearCost_inTenYears *= (1 + interestRate);
-      fourYearCost_inTenYears *= (1 + interestRate);
+      
+      if(i < 10)
+      {
+        oneYearCost_inTenYears *= (1 + interestRate);
+        fourYearCost_inTenYears*= (1 + interestRate);
+      }
+      else
+      { 
+        //When it is at 10 year
+        //The 4th year tuition cost is compounded for 7years, it need to compound for 3 more years
+        fourYearCost_inTenYears*= (1 + interestRate);
+      }
     }
 
-    System.out.println("The cost of tuition in 10 years is " + oneYearCost_inTenYears);
-    System.out.println("The cost of tuition in 10 years for 4 years is " + fourYearCost_inTenYears);
+    double[] ret = {oneYearCost_inTenYears, fourYearCost_inTenYears};
+    return ret;
   }
-
-
-  //A wrapper function for the actual algorithm
-  //base is between 2 and 16, numberA and numberB are valid numbers in the given base
-  //print the sum of two numbers in the given base and in base 10
-  public static int additionalAlgorithm(int base, int numberOfDigit, String numberA, String numberB)
+  
+//print the result of addition
+  public static int additionalAlgorithm(int numberOfDigit, String numberA, String numberB)
   {
-    //Check if base is valid, and the number is valid
-    boolean baseIsValid = base <= 16 && base >= 2;
-    boolean stringIsValid = numberA.length() == numberOfDigit && numberB.length() == numberOfDigit;
-    
-    if(baseIsValid && stringIsValid)
+    String result = getAdditionAlgorithm(numberOfDigit, numberA, numberB);
+
+    if(result.equals(ERROR_MESSAGE))
     {
-      //The actual algorithm
-      String result = theAlgorithm(base, numberOfDigit, numberA, numberB);
-
-      //Print the result
-      System.out.printf("(Base %d) %s + %s = %s\n", base, numberA, numberB, result);
-      System.out.printf("(Base 10) %d + %d = %d",
-        Integer.parseInt(numberA,base),
-        Integer.parseInt(numberB,base),
-        Integer.parseInt(result,base));
-
-      return 0;
+      System.out.println(result);
+      return -1;
     }
     else
     {
-      System.out.println("Base or Number is not valid");
-      return -1;
+      System.out.println("The result of addition is " + result);
+      return 0;
     }
   }
 
-  //return the sum of two numbers in the given base
+//Get the result of addition
+  public static String getAdditionAlgorithm(int numberOfDigit, String numberA, String numberB)
+  {
+    //Validate the input
+    int baseA = identifyBase(numberA);
+    int baseB = identifyBase(numberB);
+    boolean baseIsValid = baseA == baseB && baseA != -1; //tow number have the same base + valid prefix for bases 
+    
+    int base = baseA;
+
+    //Process the number
+    if(baseIsValid && base != 10) 
+    {
+      //Remove the prefix of the number if the base is not 10
+      switch (base) {
+        case 8: //Octal, i.e. 07231
+          numberA = numberA.substring(1);
+          numberB = numberB.substring(1);
+          break;
+        case 2:
+        case 16:
+          numberA = numberA.substring(2);
+          numberB = numberB.substring(2);
+          break;
+      }
+    }
+
+    boolean stringIsValid = numberA.length() == numberOfDigit && numberB.length() == numberOfDigit;
+    
+    //Everything is valid
+    if(baseIsValid && stringIsValid)
+    {
+      return theAlgorithm(base, numberOfDigit, numberA, numberB);
+    }
+    else 
+    {
+      return ERROR_MESSAGE;
+    }
+  }
+
+//Helper
   private static String theAlgorithm(int base, int numberOfDigit, String numberA, String numberB) {
+    //return the sum of two numbers in the given base
     char intToDigit[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
     String result = "";
     int carry = 0;
@@ -75,6 +132,7 @@ public class lab4 {
 
       if(sum >=  base)
       {
+        
         carry = 1;
         sum -= base;
       }
@@ -95,8 +153,8 @@ public class lab4 {
     return result;
   }
 
-  //parse the char to int, base upto 16
   private static int parseInt(char c) {
+    //parse the char to int with different Bases
     int  digitToInt[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
     if(Character.isLetter(c))
     {
@@ -107,4 +165,30 @@ public class lab4 {
       return digitToInt[c - '0'];
     }
   }
+
+  private static int parseInt(String s, int base) {
+    //parse the string to int with different Bases
+    int total = 0;
+    total = parseInt(s.charAt(s.length() - 1));
+    for(int i = s.length() - 2; i >= 0; --i)
+    {
+      total += total * base + parseInt(s.charAt(i));
+    }
+
+    return total;
+  }
+  
+  private static int identifyBase(String number)
+  {
+    //Check the prefix of the number
+    String prefix = number.substring(0,2).toLowerCase();
+
+    if(prefix.equals("0x"))           return 16;
+    else if(prefix.equals("0b"))      return 2;
+    else if(prefix.charAt(0) == '0')  return 8;
+    else if(Character.isDigit(number.charAt(0)) && Character.isDigit(1)) return 10; //Check the first two char are numbers
+    else return -1; //Invalid base
+  }
+
+
 }
