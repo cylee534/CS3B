@@ -80,11 +80,10 @@ public class ArrayFun {
       {
         end = mid - 1;
       }
-      else break;
+      else return mid;
     }
 
-    if(mid < array.length && array[mid] == key) index = mid; 
-    return index;
+    return -start - 1;
   }
 
   public static int binarySearch(String key, String[] array, int start, int end)
@@ -106,11 +105,9 @@ public class ArrayFun {
       {
         end = mid - 1;
       }
-      else break;
+      else return mid;
     }
-
-    if(mid < array.length && array[mid].compareToIgnoreCase(key) == 0) index = mid; 
-    return index;    
+    return -start - 1;  
   }
 
   public static void initArray(int[] arr, int value)
