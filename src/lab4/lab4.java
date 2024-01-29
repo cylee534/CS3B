@@ -82,12 +82,12 @@ public class Lab4 {
     
     int base = baseA;
 
-    //Process the number
+    //Process the string
     if(baseIsValid && base != 10) 
     {
       //Remove the prefix of the number if the base is not 10
       switch (base) {
-        case 8: //Octal, i.e. 07231
+        case 8: //Octal, i.e. numA = 07231 , and after numA = 7231
           numberA = numberA.substring(1);
           numberB = numberB.substring(1);
           break;

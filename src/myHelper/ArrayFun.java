@@ -1,4 +1,4 @@
-package lab5;
+package myHelper;
 
 public class ArrayFun {
   public static void main(String[] args)
@@ -133,5 +133,9 @@ public class ArrayFun {
     }
     System.out.println("");
   }
-
+  
+  public static void printArray(int[] array)
+  {
+    printArray(array, array.length);
+  }
 }

@@ -2,7 +2,9 @@ package lab5;
 
 import java.util.Scanner;
 
-import lab5.ArrayFun;
+import myHelper.ArrayFun;
+//My helper
+import myHelper.Asker;
 
 public class Lab05 {
   private static final int MAX_NUMBER = 256;
@@ -10,18 +12,17 @@ public class Lab05 {
 
   public static void main(String[] args)
   {
-	  // Scanner in = new Scanner(System.in);
-    // guessBirthday(in);
+	  Scanner in = new Scanner(System.in);
+    guessBirthday(in);
   }
 
   //The enhance game
   public static void guessYourNumber(Scanner in)
   {
   //Entries
-	//init each number set
 	int numberOfSet = 8;
     int[][] numbSets = new int[numberOfSet ][];
-    for(int i = 0; i < numberOfSet ; ++i)
+    for(int i = 0; i < numberOfSet ; ++i)//init each number set
     {
       numbSets[i] = commonBitGenerator(i, MAX_NUMBER);
     }
@@ -89,11 +90,12 @@ public class Lab05 {
       System.out.println("");
     } 
    //...End of Body...
-   
+  
     //Print Result
-
-    System.out.println(String.format("%50s %d","Your birthday is at ", bit));
-
+    if(bit != 0) 
+      System.out.println(String.format("%50s %d","Your birthday is at ", bit));
+    else 
+      System.out.println(String.format("%50s","I can't guess your birthday!"));
   }
 
 //Helper Function....
@@ -107,7 +109,7 @@ public class Lab05 {
     boolean numbInSet;
     
     //Get input (Y/N/IDK)
-    choiceIndex = askTarget(in, inPrompt, "idk", "n", "y");
+    choiceIndex = Asker.askTarget(in, inPrompt, "idk", "n", "y");
     choice = choiceString[choiceIndex];
 
     
@@ -115,9 +117,9 @@ public class Lab05 {
     {
       numbInSet = true;
     }
-    else if(choice == "idk")
+    else if(choice == "idk") //Search num for  user
     {
-      searchNumber = askNumber(in, "=> I'll search you number for you. Enter your number: ", 0, maxNumber);
+      searchNumber = Asker.askNumber(in, "=> I'll search you number for you. Enter your number: ", 0, maxNumber);
       numbInSet = ArrayFun.binarySearch(searchNumber, numberSet, 0, numberSet.length) != -1;
     }
     else
@@ -159,89 +161,6 @@ public class Lab05 {
     return arr;
   } 
 
-//Ask user input with prompt...
-  //Always return a valid input
-  private static boolean askYesNo(Scanner input, String prompt)
-  {
-    boolean done = false;
-    boolean isYes = false;
-    while(!done)
-    {
-      System.out.print("\n" + prompt + " (y/n):");
-      String inputStr = input.next();
-      inputStr = inputStr.toLowerCase();
 
-      if(inputStr.compareToIgnoreCase("y") == 0)
-      {
-        isYes = true;
-        done = true;
-      }
-      else if(inputStr.compareToIgnoreCase("n") == 0)
-      {
-        isYes = false;
-        done = true;
-      }
-      else
-      {
-        System.out.println("->Invalid input");
-        continue;
-      }
-    
-    }
-    
-    return isYes;
-  }
-    
-  //return index of target
-  private static int askTarget (Scanner input, String prompt, String... targets)
-  {
-    boolean done = false;
-    int targetIndex = -1;
-
-    while(!done)
-    {
-      System.out.print("\n" + prompt);
-      String inputStr = input.next();
-      inputStr = inputStr.toLowerCase();
-      targetIndex = ArrayFun.binarySearch(inputStr, targets, 0, targets.length);
-      
-      if(targetIndex > 0)
-      {
-        done = true;
-      }
-      else
-      {
-        System.out.println("->Invalid input");
-      }
-    
-    }
-    
-    return targetIndex;
-  }
-
-  private static int askNumber(Scanner input, String prompt , int RangeStart, int RangeEnd)
-  {
-    int number = 0;
-    boolean done = false;
-    while(!done)
-    {
-      System.out.print(prompt + ": ");
-      try 
-      {
-        number = input.nextInt();
-        if(number < RangeStart || number > RangeEnd)
-          throw new Exception();
-      }
-      catch(Exception e)
-      {
-        System.out.println("->Invalid input");
-        input.next();
-        continue;
-      }
-      
-      done = true;
-    }
-    return number;
-  }
   
 }
