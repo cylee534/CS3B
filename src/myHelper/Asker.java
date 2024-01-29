@@ -49,7 +49,7 @@ public class Asker {
       System.out.print("\n" + prompt);
       String inputStr = input.next();
       inputStr = inputStr.toLowerCase();
-      targetIndex = ArrayFun.binarySearch(inputStr, targets, 0, targets.length);
+      targetIndex = ArrayFun.binarySearch(inputStr, targets, 0, targets.length -1);
       
       if(targetIndex >= 0)
       {

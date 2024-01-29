@@ -134,7 +134,7 @@ public class Lab05 {
     int searchNumber;
     boolean numbInSet;
     searchNumber = Asker.askNumber(in, "=> I'll search you number for you. Enter your number: ", 0, maxNumber);
-    numbInSet = ArrayFun.binarySearch(searchNumber, numberSet, 0, numberSet.length) != -1;
+    numbInSet = ArrayFun.binarySearch(searchNumber, numberSet, 0, numberSet.length -1) != -1;
     if(numbInSet)
     {
       System.out.println("=> I found your number in the set!");
@@ -143,7 +143,7 @@ public class Lab05 {
     {
       System.out.println("=> I can't find your number in the set!");
     }
-    
+
     return numbInSet;
   }
 

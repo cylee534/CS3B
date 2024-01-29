@@ -10,32 +10,32 @@ public class ArrayFun {
 
     // Test case 1: Key is present in the array
     int testKey = 7;
-    int testIndex = binarySearch(testKey, testArray, 0, testArray.length);
+    int testIndex = binarySearch(testKey, testArray, 0, testArray.length) - 1;
     System.out.println("Binary Search Test Case 1: testKey " + testKey + " index: " + testIndex); // Expected output: 3
   
     // Test case 2: Key is not present in the array
     testKey = 8;
-    testIndex = binarySearch(testKey, testArray, 0, testArray.length);
+    testIndex = binarySearch(testKey, testArray, 0, testArray.length - 1);
     System.out.println("Binary Search Test Case 2: testKey " + testKey + " index: " + testIndex); // Expected output: -1
   
     // Test case 3: Key is the first element of the array
     testKey = 1;
-    testIndex = binarySearch(testKey, testArray, 0, testArray.length);
+    testIndex = binarySearch(testKey, testArray, 0, testArray.length - 1);
     System.out.println("Binary Search Test Case 3: testKey " + testKey + " index: " + testIndex); // Expected output: 0
   
     // Test case 4: Key is the last element of the array
     testKey = 15;
-    testIndex = binarySearch(testKey, testArray, 0, testArray.length);
+    testIndex = binarySearch(testKey, testArray, 0, testArray.length - 1);
     System.out.println("Binary Search Test Case 4: testKey " + testKey + " index: " + testIndex); // Expected output: 7
   
     // Test case 5: Key is greater than all elements in the array
     testKey = 20;
-    testIndex = binarySearch(testKey, testArray, 0, testArray.length);
+    testIndex = binarySearch(testKey, testArray, 0, testArray.length - 1);
     System.out.println("Binary Search Test Case 5: testKey " + testKey + " index: " + testIndex); // Expected output: -1
   
     // Test case 6: Key is smaller than all elements in the array
     testKey = -5;
-    testIndex = binarySearch(testKey, testArray, 0, testArray.length);
+    testIndex = binarySearch(testKey, testArray, 0, testArray.length - 1);
     System.out.println("Binary Search Test Case 6: testKey " + testKey + " index: " + testIndex); // Expected output: -1
     
 
@@ -59,8 +59,7 @@ public class ArrayFun {
   public static int binarySearch(int key, int[] array, int start, int end)
   {
     int mid = start;
-    int _end = end;
-    while(start < end)
+    while(start <= end)
     {
       mid = (start + end)/2;
       if(key == array[mid])
@@ -70,18 +69,14 @@ public class ArrayFun {
       else 
         start = mid + 1;
     }
-    
-    if(start < _end && key == array[start]) return start;
-
     return -start - 1;
   }
 
   public static int binarySearch(String key, String[] array, int start, int end)
   {
     int mid = start;
-    int _end = end;
 
-    while(start < end)
+    while(start <= end)
     {
       mid = start + (end - start)/2;
       if(key.compareToIgnoreCase(array[mid]) > 0)
@@ -95,7 +90,6 @@ public class ArrayFun {
       else return mid;
     }
 
-    if(start < _end && key.compareToIgnoreCase(array[start]) == 0) return start;
     return -start - 1;  
   }
 
@@ -127,4 +121,5 @@ public class ArrayFun {
   {
     printArray(array, array.length);
   }
+
 }
