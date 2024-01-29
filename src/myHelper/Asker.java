@@ -51,7 +51,7 @@ public class Asker {
       inputStr = inputStr.toLowerCase();
       targetIndex = ArrayFun.binarySearch(inputStr, targets, 0, targets.length);
       
-      if(targetIndex > 0)
+      if(targetIndex >= 0)
       {
         done = true;
       }
@@ -71,7 +71,7 @@ public class Asker {
     boolean done = false;
     while(!done)
     {
-      System.out.print(prompt + ": ");
+      System.out.print("\n" + prompt);
       try 
       {
         number = input.nextInt();

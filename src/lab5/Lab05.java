@@ -14,6 +14,7 @@ public class Lab05 {
   {
 	  Scanner in = new Scanner(System.in);
     guessBirthday(in);
+    guessYourNumber(in);
   }
 
   //The enhance game
@@ -109,7 +110,7 @@ public class Lab05 {
     boolean numbInSet;
     
     //Get input (Y/N/IDK)
-    choiceIndex = Asker.askTarget(in, inPrompt, "idk", "n", "y");
+    choiceIndex = Asker.askTarget(in, inPrompt, choiceString);
     choice = choiceString[choiceIndex];
 
     
@@ -119,14 +120,30 @@ public class Lab05 {
     }
     else if(choice == "idk") //Search num for  user
     {
-      searchNumber = Asker.askNumber(in, "=> I'll search you number for you. Enter your number: ", 0, maxNumber);
-      numbInSet = ArrayFun.binarySearch(searchNumber, numberSet, 0, numberSet.length) != -1;
+      numbInSet = searchForUser(in, numberSet, maxNumber);
     }
     else
     {
       numbInSet = false;
     }
 
+    return numbInSet;
+  }
+
+  private static boolean searchForUser(Scanner in, int[] numberSet, int maxNumber) {
+    int searchNumber;
+    boolean numbInSet;
+    searchNumber = Asker.askNumber(in, "=> I'll search you number for you. Enter your number: ", 0, maxNumber);
+    numbInSet = ArrayFun.binarySearch(searchNumber, numberSet, 0, numberSet.length) != -1;
+    if(numbInSet)
+    {
+      System.out.println("=> I found your number in the set!");
+    }
+    else
+    {
+      System.out.println("=> I can't find your number in the set!");
+    }
+    
     return numbInSet;
   }
 
@@ -160,7 +177,5 @@ public class Lab05 {
     
     return arr;
   } 
-
-
   
 }

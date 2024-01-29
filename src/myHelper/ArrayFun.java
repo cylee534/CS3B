@@ -3,46 +3,40 @@ package myHelper;
 public class ArrayFun {
   public static void main(String[] args)
   {
-    int[] array = {1,2,3,4,5,6,7,8,9,10};
-    int key = 10;
-    int index = linearSearch(key, array);
-    System.out.println("Linear Search: " + index);
-  
-    index = binarySearch(key, array, 0, array.length);
-    System.out.println("Binary Search: " + index);
-  
+
     // Test cases for binarySearch
     int[] testArray = {1, 3, 5, 7, 9, 11, 13, 15};
-    int testKey = 7;
-  
+    printArray(testArray);
+
     // Test case 1: Key is present in the array
+    int testKey = 7;
     int testIndex = binarySearch(testKey, testArray, 0, testArray.length);
-    System.out.println("Binary Search Test Case 1: " + testIndex); // Expected output: 3
+    System.out.println("Binary Search Test Case 1: testKey " + testKey + " index: " + testIndex); // Expected output: 3
   
     // Test case 2: Key is not present in the array
     testKey = 8;
     testIndex = binarySearch(testKey, testArray, 0, testArray.length);
-    System.out.println("Binary Search Test Case 2: " + testIndex); // Expected output: -1
+    System.out.println("Binary Search Test Case 2: testKey " + testKey + " index: " + testIndex); // Expected output: -1
   
     // Test case 3: Key is the first element of the array
     testKey = 1;
     testIndex = binarySearch(testKey, testArray, 0, testArray.length);
-    System.out.println("Binary Search Test Case 3: " + testIndex); // Expected output: 0
+    System.out.println("Binary Search Test Case 3: testKey " + testKey + " index: " + testIndex); // Expected output: 0
   
     // Test case 4: Key is the last element of the array
     testKey = 15;
     testIndex = binarySearch(testKey, testArray, 0, testArray.length);
-    System.out.println("Binary Search Test Case 4: " + testIndex); // Expected output: 7
+    System.out.println("Binary Search Test Case 4: testKey " + testKey + " index: " + testIndex); // Expected output: 7
   
     // Test case 5: Key is greater than all elements in the array
     testKey = 20;
     testIndex = binarySearch(testKey, testArray, 0, testArray.length);
-    System.out.println("Binary Search Test Case 5: " + testIndex); // Expected output: -1
+    System.out.println("Binary Search Test Case 5: testKey " + testKey + " index: " + testIndex); // Expected output: -1
   
     // Test case 6: Key is smaller than all elements in the array
     testKey = -5;
     testIndex = binarySearch(testKey, testArray, 0, testArray.length);
-    System.out.println("Binary Search Test Case 6: " + testIndex); // Expected output: -1
+    System.out.println("Binary Search Test Case 6: testKey " + testKey + " index: " + testIndex); // Expected output: -1
     
 
   }
@@ -64,49 +58,44 @@ public class ArrayFun {
 
   public static int binarySearch(int key, int[] array, int start, int end)
   {
-    int index = -1;
     int mid = start;
-    int midKey;
-
+    int _end = end;
     while(start < end)
     {
-      mid = start + (end - start)/2;
-      midKey = array[mid];
-      if(key > midKey)
-      {
-        start = mid + 1;
-      }
-      else if(key < midKey)
-      {
+      mid = (start + end)/2;
+      if(key == array[mid])
+        return mid;
+      else if(key < array[mid])
         end = mid - 1;
-      }
-      else return mid;
+      else 
+        start = mid + 1;
     }
+    
+    if(start < _end && key == array[start]) return start;
 
     return -start - 1;
   }
 
   public static int binarySearch(String key, String[] array, int start, int end)
   {
-    int index = -1;
     int mid = start;
-    String midKey = null;
+    int _end = end;
 
     while(start < end)
     {
       mid = start + (end - start)/2;
-      midKey = array[mid];
-
-      if(key.compareToIgnoreCase(midKey) > 0)
+      if(key.compareToIgnoreCase(array[mid]) > 0)
       {
         start = mid + 1;
       }
-      else if(key.compareToIgnoreCase(midKey) < 0)
+      else if(key.compareToIgnoreCase(array[mid]) < 0)
       {
         end = mid - 1;
       }
       else return mid;
     }
+
+    if(start < _end && key.compareToIgnoreCase(array[start]) == 0) return start;
     return -start - 1;  
   }
 
