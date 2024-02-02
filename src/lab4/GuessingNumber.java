@@ -20,18 +20,22 @@ public class GuessingNumber
     System.out.println(":Guessing Number Game:");
     int digit = 0;
     int tries = 10;
-    boolean isContinue = true;
+    boolean isContinue;
     //Validate the input
 
-    while(isContinue)
+    do
     {
       tries = buyTry(input, tries);
       digit = getDigit(input);
       tries = guessingNumber(digit, input, tries);
       isContinue = askYesNo(input, "Do you want to Continue?");
-    }      
+    } while(isContinue);
+
   }
-  
+
+
+//The game procedures
+  //@return the number of tries left
   private static int guessingNumber(int digit, Scanner input, int tries)
   {   
   //Entries
@@ -39,6 +43,7 @@ public class GuessingNumber
     System.out.println(String.format("Guess a number between 0 and %d", (int)(Math.pow(10,digit)-1)));
     System.out.println("");
 
+    //Quick exist if no more tries
     if(tries == 0)
     {
       System.out.println("You have no more tries left, come back after you buy more tries");
@@ -52,8 +57,9 @@ public class GuessingNumber
     int lastSamllerGuess = -1;
     boolean isCorrect = false;
 
-    //Body
-    while(!isCorrect && tries > 0)
+  //Body
+    //Exist when the user guess the correct number or no more tries
+    while(!isCorrect && tries > 0) 
     {
       System.out.println("");
       
@@ -96,7 +102,6 @@ public class GuessingNumber
     return tries;
   }
   
-  
   private static int buyTry(Scanner input, int tries)
   {
     
@@ -109,6 +114,7 @@ public class GuessingNumber
     }
     return tries;
   }
+  
   private static int getDigit(Scanner input)
   {
     int digit = 0;
@@ -122,7 +128,7 @@ public class GuessingNumber
     return digit;
   }
   
-  
+//Asker
   private static int askNumber(Scanner input, String prompt)
   {
     int number = 0;

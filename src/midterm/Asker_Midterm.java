@@ -1,19 +1,19 @@
-package myHelper;
+package midterm;
 
 import java.util.Scanner;
 
-public class Asker {
-  public static String INVALID_INPUT = "<Invalid input>";
+public class Asker_Midterm {
+  public static String INVALID_INPUT = "->Invalid input: please re-enter again";
   //Ask user input with prompt...
   //would not stop until user input a valid input
   //@return Always return a valid input 
-  private static boolean askYesNo(Scanner input, String prompt)
+  public static boolean askYesNo(Scanner input, String prompt)
   {
     boolean done = false;
     boolean isYes = false;
     while(!done)
     {
-      System.out.print("\n" + prompt + " (y/n):");
+      System.out.print(prompt + " (y/n):");
       String inputStr = input.next();
       inputStr = inputStr.toLowerCase();
 
@@ -37,42 +37,60 @@ public class Asker {
     
     return isYes;
   }
-    
-  //return index of target
-  public static int askTarget(Scanner input, String prompt, String... targets)
+  
+  public static String askTargetString(Scanner in, String prompt,  String[] targetStrings)
   {
+    String inputStr = "";
     boolean done = false;
-    int targetIndex = -1;
-
     while(!done)
     {
-      System.out.print("\n" + prompt);
-      String inputStr = input.next();
-      inputStr = inputStr.toLowerCase();
-      targetIndex = ArrayFun.binarySearch(inputStr, targets, 0, targets.length -1);
-      
-      if(targetIndex >= 0)
+      System.out.print(prompt);
+      inputStr = in.next();
+      for(String str : targetStrings)
       {
-        done = true;
+        if(inputStr.compareToIgnoreCase(str) == 0)
+        {
+          done = true;
+          break;
+        }
       }
-      else
+
+      if(!done)
       {
         System.out.println(INVALID_INPUT);
       }
-    
     }
-    
-    return targetIndex;
-  }
-
-  public static int askNumber(Scanner input, String prompt)
-  {
-    return askNumber(input, prompt, 0, Integer.MAX_VALUE);
+    return inputStr;
   }
   
-  public static int askNumber(Scanner input, String prompt, int RangeStart, int RangeEnd)
+  //Range = [RangeStart, RangeEnd] (inclusive)
+  public static int askNumber(Scanner input, String prompt , int RangeStart, int RangeEnd)
   {
-    return askNumber(input, prompt, RangeStart, RangeEnd, INVALID_INPUT);
+    int number = 0;
+    boolean done = false;
+    while(!done)
+    {
+      System.out.print(prompt);
+      try 
+      {
+        number = input.nextInt();
+        if(number < RangeStart || number > RangeEnd)
+        {
+          System.out.println(INVALID_INPUT);
+          continue;
+        }
+
+      }
+      catch(Exception e)
+      {
+        System.out.println(INVALID_INPUT);
+        input.next();
+        continue;
+      }
+      
+      done = true;
+    }
+    return number;
   }
 
   public static int askNumber(Scanner input, String prompt, int RangeStart, int RangeEnd, String errorPrompt)
@@ -85,11 +103,6 @@ public class Asker {
       try 
       {
         number = input.nextInt();
-        if(number < RangeStart || number > RangeEnd)
-        {
-          System.out.println(errorPrompt);
-          continue;
-        }
       }
       catch(Exception e)
       {

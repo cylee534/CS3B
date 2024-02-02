@@ -41,6 +41,30 @@ public class ArrayFun {
 
   }
 
+  public static String[] selectionSort(String[] arr)
+  {
+    for(int i = 0; i < arr.length; i++)
+    {
+      int larger = i;
+      for(int j = i + 1; j < arr.length; j++)
+      {
+        //if current element is bigger than the larger element
+        if(arr[larger].compareToIgnoreCase(arr[j]) > 0)
+        {
+          larger = j;
+        }
+      }
+
+      if(larger != i)
+      {
+        String temp = arr[i];
+        arr[i] = arr[larger];
+        arr[larger] = temp;
+      }
+    }
+    return arr;
+  }
+
   public static int linearSearch(int key, int[] array)
   {
     int index = -1;
@@ -99,6 +123,27 @@ public class ArrayFun {
       arr[i] = value;
   }
 
+  public static void printArray(int[] array, int maxNumperLine, int sentinal)
+  {
+    int count = 0;
+    if(maxNumperLine <= 0) maxNumperLine = array.length;
+
+    for(int i = 0; i < array.length; ++i)
+    {
+      if(array[i] == sentinal) break;
+      
+      String num = String.format("%4d ", array[i]);
+      System.out.print(num);
+      if (count == maxNumperLine)
+      {
+        System.out.println();
+        count = 0;
+      }
+      else ++count;
+    }
+    System.out.println("");
+  }
+  
   public static void printArray(int[] array, int maxNumperLine)
   {
     int count = 0;
