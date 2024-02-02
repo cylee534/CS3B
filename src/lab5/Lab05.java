@@ -90,8 +90,6 @@ public class Lab05 {
 
 //Helper Function...
 
-//Procedure helper (that encapsulate the main logic)...
-
   //@param maxNumber: the upper bound number of our numberGame
   private static boolean isNumbInSet(Scanner in, int[] numberSet, int i, int maxNumber) {
     int choiceIndex;
@@ -125,7 +123,7 @@ public class Lab05 {
     int searchNumber;
     boolean numbInSet;
     searchNumber = Asker.askNumber(in, "=> I'll search you number for you. Enter your number: ", 0, maxNumber);
-    numbInSet = ArrayFun.binarySearch(searchNumber, numberSet, 0, numberSet.length -1) != -1;
+    numbInSet = ArrayFun.binarySearch(searchNumber, numberSet, 0, getArrLen(numberSet) -1) >= 0;
     if(numbInSet)
     {
       System.out.println("=> I found your number in the set!");
@@ -163,7 +161,6 @@ public class Lab05 {
     in.nextLine();
   }
   
-  //...End of Procedure helper...//
 
 //functional helper...//
 
@@ -199,6 +196,14 @@ public class Lab05 {
     return arr;
   } 
   
+  private static int getArrLen(int[] arr) {
+    int len = 0;
+    while(arr[len] != -1)
+    {
+      ++len;
+    }
+    return len;
+  }
   //...End of functional helper...//
 
 }
